@@ -27,6 +27,7 @@ export default function RegisterForm() {
     defaultValues: {
       name: '',
       email: '',
+      telephone: '',
       password: '',
     },
   });
@@ -34,7 +35,7 @@ export default function RegisterForm() {
   const onSubmit = async (values: z.infer<typeof RegisterSchema>) => {
     setFormError('');
     setFormSuccess('');
-
+    console.log(values)
     startTransition(async () => {
       try {
         const response = await fetch('/api/register', {
@@ -52,7 +53,7 @@ export default function RegisterForm() {
 
         const data = await response.json();
         setFormSuccess('User registered successfully');
-      } catch (error) {
+      } catch (error: any) {
         setFormError(error.message);
       }
     });
@@ -96,6 +97,23 @@ export default function RegisterForm() {
                       {...field}
                       placeholder='hola@ejemplo.com'
                       type='email'
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='telephone'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Teléfono</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      placeholder='+57 3221234567'
+                      type='tel'
                     />
                   </FormControl>
                   <FormMessage />

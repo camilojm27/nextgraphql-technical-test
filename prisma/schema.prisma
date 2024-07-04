@@ -19,13 +19,15 @@ enum Role {
 }
 
 model Transaction {
-  id          String   @id @default(uuid())
-  amount      Float
-  description String
-  userId      String
-  user        User     @relation(fields: [userId], references: [id])
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id              String   @id @default(uuid())
+  amount          Float
+  description     String   @default("")
+  userId          String
+  user            User     @relation(fields: [userId], references: [id])
+  transactionDate DateTime @default(now()) // Fecha real de la transacción
+
+  createdAt DateTime @default(now()) // Fecha donde es creado en la base de datos
+  updatedAt DateTime @updatedAt
 }
 
 // https://authjs.dev/getting-started/adapters/prisma
@@ -41,7 +43,8 @@ model User {
 
   password String?
 
-  roles        Role          @default(USER)
+  telephone    String        @unique
+  role        Role          @default(USER)
   transactions Transaction[]
 
   createdAt DateTime @default(now())
