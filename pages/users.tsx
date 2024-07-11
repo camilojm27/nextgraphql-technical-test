@@ -40,8 +40,8 @@ export default function Users({
 
   const { data, refetch, loading } = useQuery(USERS_QUERY, {
     client: gqlClient,
-    fetchPolicy: 'cache-and-network', // Ensure that the query runs both on client and server
-    initialFetchPolicy: 'network-only', // Run the query on client side even if there is data in cache
+    fetchPolicy: 'cache-first',
+    initialFetchPolicy: 'cache-and-network', 
     onCompleted: (data) => {
       if (!data.users) {
         data.users = users;
@@ -57,7 +57,7 @@ export default function Users({
     return <AccessDenied/>;
   }
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return null;
 
   return (
     <div className="m-auto ">

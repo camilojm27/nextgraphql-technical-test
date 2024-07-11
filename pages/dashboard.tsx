@@ -1,28 +1,29 @@
 import { gqlClient } from '@/graphql/client';
 import { TRANSACTIONS_QUERY } from '@/graphql/queries';
 import { GetServerSideProps } from 'next';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
+import { 
+  Chart as ChartJS, 
+  CategoryScale, 
+  LinearScale, 
+  BarElement, 
+  Title, 
+  Tooltip, 
+  Legend 
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-  CardDescription,
+import { 
+  Card, 
+  CardHeader, 
+  CardTitle, 
+  CardContent, 
+  CardDescription 
 } from '@/components/ui/card';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { useSession } from 'next-auth/react';
 import AccessDenied from '@/components/auth/acces-denied';
+import Papa from 'papaparse';
 
 ChartJS.register(
   CategoryScale,
@@ -46,20 +47,17 @@ export default function Dashboard({
 }) {
   const { data: session, status } = useSession()
 
-  if (typeof window === "undefined") return null
 
   const labels = transactions.map((transaction) =>
     new Date(Number.parseInt(transaction.createdAt)).toLocaleDateString()
   );
 
-  console.log(labels);
-
   const options = {
     plugins: {
-      title: {
-        display: true,
-        text: 'Chart.js Bar Chart - Stacked',
-      },
+      // title: {
+      //   display: true,
+      //   text: 'Ingresos y Egresos',
+      // },
     },
     responsive: true,
     scales: {
@@ -100,6 +98,25 @@ export default function Dashboard({
   if (status === "unauthenticated" || session?.user.role !== 'ADMIN') {
     return <AccessDenied/>;
   }
+
+  const downloadCSV = () => {
+    const csvData = transactions.map(transaction => ({
+      Id: transaction.id,
+      Amount: transaction.amount,
+      Description: transaction.description,
+      UserName: transaction.user.name,
+      UserEmail: transaction.user.email,
+      UserId: transaction.userId,
+      CreatedAt: new Date(Number.parseInt(transaction.createdAt)).toLocaleDateString(),
+    }));
+
+    const csv = Papa.unparse(csvData);
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'transactions.csv';
+    link.click();
+  };
 
   return (
     <div>
@@ -157,6 +174,8 @@ export default function Dashboard({
           <Card
             x-chunk='dashboard-01-chunk-3'
             className='bg-slate-800 text-white hover:cursor-pointer text-center'
+            id='download-csv'
+            onClick={downloadCSV}
           >
             <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
               <ActivityIcon className='h-4 w-4 text-muted-foreground' />
@@ -244,7 +263,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     console.error(error);
     return {
       props: {
-        transactions: [],
+        transactions: [], total: 0, income: 0, outgoings: 0
       },
     };
   }

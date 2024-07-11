@@ -9,12 +9,8 @@ export default function Layout({ children }:  { children: React.ReactNode }) {
   
 
   return (
-    <div className='flex min-h-screen w-full flex-col'>
-      {status === "authenticated" && (
-        <pre>
-          {data && JSON.stringify(data, null, 2)}
-        </pre>
-      )}
+    <main className='flex min-h-screen w-full flex-col'>
+
 
       <header className='sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6'>
         <nav
@@ -22,7 +18,6 @@ export default function Layout({ children }:  { children: React.ReactNode }) {
           <Link
             href='/'
             className='flex items-center gap-2 text-lg font-semibold md:text-base'
-            prefetch={false}
           >
             <Package2Icon className='h-6 w-6' />
             <span className='sr-only'>Acme Inc</span>
@@ -30,7 +25,6 @@ export default function Layout({ children }:  { children: React.ReactNode }) {
           <Link
             href='/'
             className='text-muted-foreground transition-colors hover:text-foreground'
-            prefetch={false}
           >
             Inicio
           </Link>
@@ -38,7 +32,6 @@ export default function Layout({ children }:  { children: React.ReactNode }) {
             <Link
               href='transactions'
               className='text-muted-foreground transition-colors hover:text-foreground'
-              prefetch={false}
             >
               Transaciones
             </Link>
@@ -49,14 +42,12 @@ export default function Layout({ children }:  { children: React.ReactNode }) {
               <Link
                 href='users'
                 className='text-muted-foreground transition-colors hover:text-foreground'
-                prefetch={false}
               >
                 Usuarios
               </Link>
               <Link
                 href='dashboard'
-                className='text-foreground transition-colors hover:text-foreground'
-                prefetch={false}
+                className='text-muted-foreground transition-colors hover:text-foreground'
               >
                 Reportes
               </Link>
@@ -81,7 +72,7 @@ export default function Layout({ children }:  { children: React.ReactNode }) {
         </nav>
       </header>
       {children}
-    </div>
+    </main>
   );
 }
 

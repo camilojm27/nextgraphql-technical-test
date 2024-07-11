@@ -56,8 +56,8 @@ export default function Transactions({
 
   const { data, refetch, loading } = useQuery(QUERY, {
     client: gqlClient,
-    fetchPolicy: 'cache-and-network', // Ensure that the query runs both on client and server
-    initialFetchPolicy: 'network-only', // Run the query on client side even if there is data in cache
+    fetchPolicy: 'cache-first',
+    initialFetchPolicy: 'cache-and-network', 
     onCompleted: (data) => {
       if (!data.transactions) {
         data.transactions = initialTransactions;
@@ -74,16 +74,16 @@ export default function Transactions({
     return <AccessDenied/>;
   }
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return null;
 
   return (
-    <div className="m-auto w-max[90%]">
-                                                                          {/*@ts-ignore*/}
+    <section className="m-auto w-max[90%]">
+                                                                        {/*@ts-ignore*/}
       <AddTransaction onTransactionAdded={handleTransactionAdded} userID={session?.user?.id} />
       <DataTable
         columns={columns}
         data={data?.transactions || initialTransactions}
       />
-    </div>
+    </section>
   );
 }
