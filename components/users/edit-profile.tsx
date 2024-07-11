@@ -36,7 +36,7 @@ import { gqlClient } from '@/graphql/client';
 
 type EditProfileProps = {
   name: string;
-  role: string;
+  role: 'USER' | 'ADMIN';
   onSave?: (user: any) => void;
 };
 

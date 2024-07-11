@@ -28,7 +28,7 @@ const ADD_TRANSACTION_MUTATION = gql`
   }
 `;
 
-export default function AddTransaction({onTransactionAdded} : {onTransactionAdded: () => void}) {
+export default function AddTransaction({onTransactionAdded, userID} : {onTransactionAdded: () => void, userID: string}) {
   const form = useForm<z.infer<typeof TransactionSchema>>({
     resolver: zodResolver(TransactionSchema),
     defaultValues: {
@@ -50,7 +50,7 @@ export default function AddTransaction({onTransactionAdded} : {onTransactionAdde
           transaction: {
             amount: values.amount,
             description: values.description,
-            userId: "clxzhhi6f0000y2iblkpib5h9",
+            userId: userID,
             transactionDate: values.date,
           },
         },
@@ -107,6 +107,7 @@ export default function AddTransaction({onTransactionAdded} : {onTransactionAdde
                 <FormItem>
                   <FormLabel>Fecha</FormLabel>
                   <FormControl>
+                    {/*@ts-ignore*/}
                     <Input type="date" {...field} />
                   </FormControl>
                   <FormMessage />

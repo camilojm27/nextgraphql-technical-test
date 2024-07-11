@@ -4,6 +4,8 @@ import { DataTable } from '@/components/transactions/data-table';
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import AddTransaction from '@/components/transactions/add-transaction';
 import { gqlClient } from '@/graphql/client';
+import { useSession } from 'next-auth/react';
+import AccessDenied from '@/components/auth/acces-denied';
 
 // Define the GraphQL query
 const QUERY = gql`
@@ -47,6 +49,11 @@ export const getServerSideProps: GetServerSideProps = async () => {
 export default function Transactions({
   initialTransactions,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  if (typeof window === "undefined") return null
+
+  const { data: session, status } = useSession()
+
+
   const { data, refetch, loading } = useQuery(QUERY, {
     client: gqlClient,
     fetchPolicy: 'cache-and-network', // Ensure that the query runs both on client and server
@@ -62,11 +69,16 @@ export default function Transactions({
     refetch();
   };
 
+
+  if (status === "unauthenticated") {
+    return <AccessDenied/>;
+  }
+
   if (loading) return <div>Loading...</div>;
 
   return (
-    <div>
-      <AddTransaction onTransactionAdded={handleTransactionAdded} />
+    <div className="m-auto w-max[90%]">
+      <AddTransaction onTransactionAdded={handleTransactionAdded} userID={session?.user?.id} />
       <DataTable
         columns={columns}
         data={data?.transactions || initialTransactions}

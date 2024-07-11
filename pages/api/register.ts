@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import argon2 from 'argon2';
 
 import { z } from 'zod';
-import prisma from '@/lib/db';
+import prisma from '@/prisma/db';
 import { getUserByEmail } from '@/prisma/user';
 
 export default async function handler(
@@ -39,7 +39,7 @@ export default async function handler(
     res
       .status(201)
       .json({ message: 'User registered successfully', user: result });
-  } catch (e) {
+  } catch (e: any) {
     if (e instanceof z.ZodError) {
       return res.status(400).json({ errors: e.errors });
     }

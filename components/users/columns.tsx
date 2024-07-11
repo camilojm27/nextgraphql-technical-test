@@ -74,6 +74,7 @@ export const columns: ColumnDef<User>[] = [
     cell: (tanstack) => (
       <EditProfile
         name={tanstack.row.original.name}
+        //@ts-ignore
         role={tanstack.row.original.role}
         onSave={(user) => {
           // TODO: Tanstack sucks

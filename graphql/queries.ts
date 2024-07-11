@@ -11,6 +11,7 @@ export const TRANSACTIONS_QUERY = gql`
       updatedAt
       user {
         name
+        email
       }
     }
   }

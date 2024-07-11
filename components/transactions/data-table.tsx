@@ -77,7 +77,7 @@ export function DataTable({data, columns}: {data: any[], columns: any[]}) {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
-              Columns <ChevronDown className="ml-2 h-4 w-4" />
+              Columnas <ChevronDown className="ml-2 h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -144,7 +144,7 @@ export function DataTable({data, columns}: {data: any[], columns: any[]}) {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  No hay datos para mostrar.
                 </TableCell>
               </TableRow>
             )}
@@ -163,7 +163,7 @@ export function DataTable({data, columns}: {data: any[], columns: any[]}) {
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
-            Previous
+            Anterior
           </Button>
           <Button
             variant="outline"
@@ -171,7 +171,7 @@ export function DataTable({data, columns}: {data: any[], columns: any[]}) {
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
-            Next
+            Siguiente
           </Button>
         </div>
       </div>
