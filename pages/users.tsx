@@ -52,7 +52,7 @@ export default function Users({
   const handleTransactionAdded = () => {
     refetch();
   };
-
+  {/*@ts-ignore*/}
   if (status === "unauthenticated" || session?.user.role !== 'ADMIN') {
     return <AccessDenied/>;
   }

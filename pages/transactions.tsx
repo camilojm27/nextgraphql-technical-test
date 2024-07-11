@@ -78,6 +78,7 @@ export default function Transactions({
 
   return (
     <div className="m-auto w-max[90%]">
+                                                                          {/*@ts-ignore*/}
       <AddTransaction onTransactionAdded={handleTransactionAdded} userID={session?.user?.id} />
       <DataTable
         columns={columns}

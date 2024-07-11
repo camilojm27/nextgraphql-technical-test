@@ -43,7 +43,7 @@ export default function Layout({ children }:  { children: React.ReactNode }) {
               Transaciones
             </Link>
           )}
-
+          {/*@ts-ignore*/}
           {status === "authenticated" && data?.user.role === "ADMIN" &&(
             <>
               <Link
