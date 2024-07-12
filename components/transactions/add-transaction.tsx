@@ -35,6 +35,7 @@ export default function AddTransaction({
   onTransactionAdded: () => void;
   userID: string;
 }) {
+  
   const form = useForm<z.infer<typeof TransactionSchema>>({
     resolver: zodResolver(TransactionSchema),
     defaultValues: {

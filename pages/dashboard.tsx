@@ -4,7 +4,7 @@
  * Los datos son calculados en el servidor
  * El csv es generado en el cliente como blob
  */
-
+//TDOO: Agregar un selector de fecha para filtrar las transacciones
 import { gqlClient } from '@/graphql/client';
 import { TRANSACTIONS_QUERY } from '@/graphql/queries';
 import { GetServerSideProps } from 'next';
@@ -65,6 +65,7 @@ export default function Dashboard({
     },
   };
   // Datos de la gráfica
+  // TODO: Normalizar los datos
   const data = {
     labels,
     datasets: [
@@ -234,7 +235,12 @@ export default function Dashboard({
  * Calculamos el total de ingresos y egresos  en el servidor
  * */
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=10, stale-while-revalidate=30'
+  )
+  
   try {
     const data = await gqlClient.query({ query: TRANSACTIONS_QUERY });
     return {
