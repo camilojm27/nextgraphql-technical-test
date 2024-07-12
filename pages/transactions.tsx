@@ -6,7 +6,7 @@
  */
 import { useQuery } from '@apollo/client';
 import { columns } from '@/components/transactions/columns';
-import { DataTable } from '@/components/transactions/data-table';
+import { DataTable } from '@/components/data-table';
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import AddTransaction from '@/components/transactions/add-transaction';
 import { gqlClient } from '@/graphql/client';

@@ -4,7 +4,7 @@
  * 
  */
 import { columns } from '@/components/users/columns';
-import { DataTable } from '@/components/transactions/data-table';
+import { DataTable } from '@/components/data-table';
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { gqlClient } from '@/graphql/client';
 import { USERS_QUERY } from '@/graphql/queries';

@@ -101,8 +101,8 @@ export const columns: ColumnDef<Transaction>[] = [
         </Button>
       );
     },
-    //@ts-ignore
     cell: ({ row }) => (
+    //@ts-ignore
       <div className='lowercase'>{row.getValue('user').name}</div>
     ),
   },
