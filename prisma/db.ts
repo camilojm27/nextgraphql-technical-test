@@ -1,4 +1,8 @@
-import { PrismaClient } from '@prisma/client'
+/**
+ * Permite tener una única instancia de Prisma en toda la aplicación.
+ * (Patron de diseño Singleton)
+ */
+import { PrismaClient } from '@prisma/client';
 
 const prismaClientSingleton = () => {
   return new PrismaClient()

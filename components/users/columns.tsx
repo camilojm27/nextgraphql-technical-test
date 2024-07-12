@@ -1,19 +1,13 @@
+/*
+* Definición de las columnas de la tabla de transacciones
+* Se utiliza la librería @tanstack/react-table y diseño de shadcn
+*/
 import { ColumnDef } from '@tanstack/react-table';
 import { ArrowUpDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 import EditProfile from '@/components/users/edit-profile';
-
-export type User = {
-  id: string;
-  name: string;
-  email: string;
-  telephone: string;
-  role: string;
-  image: string;
-  createdAt: string;
-  updatedAt: string;
-};
+import { User } from '@/types';
 
 export const columns: ColumnDef<User>[] = [
   {
@@ -72,8 +66,10 @@ export const columns: ColumnDef<User>[] = [
   
     header: 'Actions',
     cell: (tanstack) => (
+      //Cada fila de la tabla tiene un boton de editar que abre un modal con el componente EditProfile
       <EditProfile
         name={tanstack.row.original.name}
+        userID={tanstack.row.original.id}
         //@ts-ignore
         role={tanstack.row.original.role}
         onSave={(user) => {

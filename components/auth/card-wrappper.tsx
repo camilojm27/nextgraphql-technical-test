@@ -30,9 +30,11 @@ export const CardWrapper = ({
         <Header label={headerLabel}></Header>
       </CardHeader>
       <CardContent>{children}</CardContent>
-      {showSocial && <CardFooter>
-        <SocialLogin />
-        </CardFooter>}
+      {showSocial && (
+        <CardFooter>
+          <SocialLogin />
+        </CardFooter>
+      )}
       <CardFooter className='flex justify-center'>
         <Button variant='link' size='sm' asChild>
           <Link href={backButtonHref}>{backButtonLabel}</Link>

@@ -8,48 +8,28 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { EditUserSchema } from '@/schemas';
+import { EditUserSchema } from '@/types/zodSchemas';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Textarea } from '@/components/ui/textarea';
-import { ApolloClient, gql, useMutation } from '@apollo/client';
+import { gql, useMutation } from '@apollo/client';
 import { gqlClient } from '@/graphql/client';
+import { EDIT_USER_MUTATION } from '@/graphql/queries';
 
 type EditProfileProps = {
   name: string;
+  userID: string;
   role: 'USER' | 'ADMIN';
   onSave?: (user: any) => void;
 };
 
-const EDIT_USER_MUTATION = gql`
-  mutation EditUser($editUserId: ID!, $user: UserInput!) {
-    editUser(id: $editUserId, user: $user) {
-      role
-      name
-    }
-  }
-`;
 
-export default function EditProfile({ name, role, onSave }: EditProfileProps) {
+export default function EditProfile({ name,userID, role, onSave }: EditProfileProps) {
     const [open, setOpen] = React.useState(false);
 
   const form = useForm<z.infer<typeof EditUserSchema>>({
@@ -69,7 +49,7 @@ export default function EditProfile({ name, role, onSave }: EditProfileProps) {
     try {
       const response = await addTransaction({
         variables: {
-          editUserId: 'cly6hw85r0001w5nbjdcajjt4', //TODO: Change this to the actual user id
+          editUserId: userID,
           user: {
             role: values.role,
             name: values.name,

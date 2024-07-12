@@ -1,4 +1,4 @@
-import prisma from "@/prisma/db";
+import prisma from '@/prisma/db';
 
 export const resolvers = {
   Query: {

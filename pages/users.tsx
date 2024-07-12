@@ -1,4 +1,8 @@
-import { useQuery } from '@apollo/client';
+/**
+ * Obtenemos los datos del servidor y los pasamos a la tabla de datos
+ * Verificamos si el usuario tiene permisos para acceder a la página
+ * 
+ */
 import { columns } from '@/components/users/columns';
 import { DataTable } from '@/components/transactions/data-table';
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
@@ -29,40 +33,23 @@ export const getServerSideProps: GetServerSideProps = async () => {
   }
 };
 
-// Define the component to display the data
 export default function Users({
   users,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
 
   const { data: session, status } = useSession()
-  if (typeof window === "undefined") return null
 
 
-  const { data, refetch, loading } = useQuery(USERS_QUERY, {
-    client: gqlClient,
-    fetchPolicy: 'cache-first',
-    initialFetchPolicy: 'cache-and-network', 
-    onCompleted: (data) => {
-      if (!data.users) {
-        data.users = users;
-      }
-    },
-  });
-
-  const handleTransactionAdded = () => {
-    refetch();
-  };
   {/*@ts-ignore*/}
   if (status === "unauthenticated" || session?.user.role !== 'ADMIN') {
     return <AccessDenied/>;
   }
 
-  if (loading) return null;
 
   return (
     <div className="m-auto ">
       {/* <pre>{JSON.stringify(users)}</pre> */}
-      <DataTable columns={columns} data={data?.users || users} />
+      <DataTable columns={columns} data={users} />
     </div>
   );
 }

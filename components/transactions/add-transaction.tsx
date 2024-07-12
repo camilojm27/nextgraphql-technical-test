@@ -8,27 +8,33 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { TransactionSchema } from '@/schemas';
+import { TransactionSchema } from '@/types/zodSchemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Textarea } from '@/components/ui/textarea';
-import { ApolloClient, gql, useMutation } from '@apollo/client';
+import { gql, useMutation } from '@apollo/client';
 import { gqlClient } from '@/graphql/client';
+import { ADD_TRANSACTION_MUTATION } from '@/graphql/queries';
 
-// Define the GraphQL mutation
-const ADD_TRANSACTION_MUTATION = gql`
-  mutation Mutation($transaction: TransactionInput) {
-    createTransaction(transaction: $transaction) {
-      id
-    }
-  }
-`;
 
-export default function AddTransaction({onTransactionAdded, userID} : {onTransactionAdded: () => void, userID: string}) {
+export default function AddTransaction({
+  onTransactionAdded,
+  userID,
+}: {
+  onTransactionAdded: () => void;
+  userID: string;
+}) {
   const form = useForm<z.infer<typeof TransactionSchema>>({
     resolver: zodResolver(TransactionSchema),
     defaultValues: {
@@ -37,7 +43,6 @@ export default function AddTransaction({onTransactionAdded, userID} : {onTransac
       description: '',
     },
   });
-
 
   const [addTransaction] = useMutation(ADD_TRANSACTION_MUTATION, {
     client: gqlClient,
@@ -65,23 +70,25 @@ export default function AddTransaction({onTransactionAdded, userID} : {onTransac
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Nueva transacción</Button>
+        <Button variant='outline'>Nueva transacción</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className='sm:max-w-[425px]'>
         <DialogHeader>
           <DialogTitle></DialogTitle>
-          <DialogDescription>Inserte los datos de la transacción</DialogDescription>
+          <DialogDescription>
+            Inserte los datos de la transacción
+          </DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(sendForm)}>
             <FormField
               control={form.control}
-              name="amount"
+              name='amount'
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Monto</FormLabel>
                   <FormControl>
-                    <Input type="number" {...field} />
+                    <Input type='number' {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -89,7 +96,7 @@ export default function AddTransaction({onTransactionAdded, userID} : {onTransac
             />
             <FormField
               control={form.control}
-              name="description"
+              name='description'
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Concepto</FormLabel>
@@ -102,20 +109,22 @@ export default function AddTransaction({onTransactionAdded, userID} : {onTransac
             />
             <FormField
               control={form.control}
-              name="date"
+              name='date'
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Fecha</FormLabel>
                   <FormControl>
                     {/*@ts-ignore*/}
-                    <Input type="date" {...field} />
+                    <Input type='date' {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <DialogFooter>
-              <Button type="submit" className="mx-auto my-2">Ingresar</Button>
+              <Button type='submit' className='mx-auto my-2'>
+                Ingresar
+              </Button>
             </DialogFooter>
           </form>
         </Form>

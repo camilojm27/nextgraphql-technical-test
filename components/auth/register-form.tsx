@@ -12,7 +12,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { RegisterSchema } from '@/schemas';
+import { RegisterSchema } from '@/types/zodSchemas';
 import { FormError } from '../form-error';
 import { FormSuccess } from '@/components/form-sucess';
 import { useState, useTransition } from 'react';
@@ -35,7 +35,7 @@ export default function RegisterForm() {
   const onSubmit = async (values: z.infer<typeof RegisterSchema>) => {
     setFormError('');
     setFormSuccess('');
-    console.log(values)
+    console.log(values);
     startTransition(async () => {
       try {
         const response = await fetch('/api/register', {
@@ -76,11 +76,7 @@ export default function RegisterForm() {
                 <FormItem>
                   <FormLabel>Nombre</FormLabel>
                   <FormControl>
-                    <Input
-                      {...field}
-                      placeholder='Pepito Perez'
-                      type='text'
-                    />
+                    <Input {...field} placeholder='Pepito Perez' type='text' />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -110,11 +106,7 @@ export default function RegisterForm() {
                 <FormItem>
                   <FormLabel>Teléfono</FormLabel>
                   <FormControl>
-                    <Input
-                      {...field}
-                      placeholder='+57 3221234567'
-                      type='tel'
-                    />
+                    <Input {...field} placeholder='+57 3221234567' type='tel' />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -143,4 +135,4 @@ export default function RegisterForm() {
       </Form>
     </CardWrapper>
   );
-};
+}

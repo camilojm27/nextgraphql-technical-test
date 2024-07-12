@@ -1,7 +1,14 @@
+/**
+ * Componente que se encarga de renderizar el layout de la aplicacion (Header)
+ * Si el usuario es ADMIN, se muestra el boton de usuarios y reportes
+ *
+ * Si el usuario esta autenticado, se muestra el boton de cerrar sesion
+ * Si el usuario no esta autenticado, se muestra el boton de iniciar sesion
+ */
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import React from 'react';
-import { useSession, signOut, signIn} from "next-auth/react"
+import { signIn, signOut, useSession } from 'next-auth/react';
 
 
 export default function Layout({ children }:  { children: React.ReactNode }) {

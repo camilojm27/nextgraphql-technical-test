@@ -1,3 +1,6 @@
+/*
+  Se crea el servidor de graphql, se separan los schemas y resolvers en archivos diferentes
+*/
 import { ApolloServer } from '@apollo/server';
 import { startServerAndCreateNextHandler } from '@as-integrations/next';
 import { makeExecutableSchema } from '@graphql-tools/schema';

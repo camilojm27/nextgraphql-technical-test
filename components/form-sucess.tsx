@@ -1,4 +1,4 @@
-import { CircleAlert, CircleCheck } from 'lucide-react';
+import { CircleCheck } from 'lucide-react';
 
 interface FormSuccessProps {
   message?: string;

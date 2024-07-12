@@ -6,19 +6,17 @@ import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { LoginSchema } from '@/schemas';
+import { LoginSchema } from '@/types/zodSchemas';
 import { FormError } from '../form-error';
 import { FormSuccess } from '@/components/form-sucess';
 
 export const LoginForm = () => {
-
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {

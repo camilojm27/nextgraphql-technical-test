@@ -1,3 +1,8 @@
+/*
+* Definición de las columnas de la tabla de transacciones
+* Se utiliza la librería @tanstack/react-table y diseño de shadcn
+*/
+
 import { ColumnDef } from '@tanstack/react-table';
 import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -5,23 +10,18 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Checkbox } from '@/components/ui/checkbox';
-
 
 export type Transaction = {
-  id: string
-  amount: number
-  description: string
-  createdAt: string
+  id: string;
+  amount: number;
+  description: string;
+  createdAt: string;
   user: {
-    name: string
-  }
-}
-
+    name: string;
+  };
+};
 
 export const columns: ColumnDef<Transaction>[] = [
   {
@@ -29,15 +29,16 @@ export const columns: ColumnDef<Transaction>[] = [
     header: ({ column }) => {
       return (
         <Button
-          variant="ghost"
+          variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Concepto
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className='ml-2 h-4 w-4' />
         </Button>
       );
-    }, cell: ({ row }) => (
-      <div className="capitalize">{row.getValue('description')}</div>
+    },
+    cell: ({ row }) => (
+      <div className='capitalize'>{row.getValue('description')}</div>
     ),
   },
   {
@@ -45,24 +46,24 @@ export const columns: ColumnDef<Transaction>[] = [
     header: ({ column }) => {
       return (
         <Button
-          variant="ghost"
+          variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Monto
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className='ml-2 h-4 w-4' />
         </Button>
       );
-    }, cell: ({ row }) => {
+    },
+    cell: ({ row }) => {
       const amount = parseFloat(row.getValue('amount'));
 
-      // Format the amount as a dollar amount
       const formatted = new Intl.NumberFormat('es-CO', {
         style: 'currency',
         currency: 'COP',
         minimumFractionDigits: 0,
       }).format(amount);
 
-      return <div className="text-center font-medium">{formatted}</div>;
+      return <div className='text-center font-medium'>{formatted}</div>;
     },
   },
   {
@@ -70,13 +71,11 @@ export const columns: ColumnDef<Transaction>[] = [
     header: ({ column }) => {
       return (
         <Button
-          variant="ghost"
-          onClick={() =>
-            column.toggleSorting(column.getIsSorted() === 'asc')
-          }
+          variant='ghost'
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Fecha
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className='ml-2 h-4 w-4' />
         </Button>
       );
     },
@@ -84,11 +83,7 @@ export const columns: ColumnDef<Transaction>[] = [
       <div>
         {(() => {
           const date = new Date(parseInt(row.original.createdAt));
-          return (
-            date.toLocaleDateString() +
-            ' ' +
-            date.toLocaleTimeString()
-          );
+          return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
         })()}
       </div>
     ),
@@ -98,16 +93,18 @@ export const columns: ColumnDef<Transaction>[] = [
     header: ({ column }) => {
       return (
         <Button
-          variant="ghost"
+          variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Usuario
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className='ml-2 h-4 w-4' />
         </Button>
       );
     },
     //@ts-ignore
-    cell: ({ row }) => <div className="lowercase">{row.getValue('user').name}</div>,
+    cell: ({ row }) => (
+      <div className='lowercase'>{row.getValue('user').name}</div>
+    ),
   },
 
   {
@@ -119,12 +116,12 @@ export const columns: ColumnDef<Transaction>[] = [
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Abrir Menu</span>
-              <MoreHorizontal className="h-4 w-4" />
+            <Button variant='ghost' className='h-8 w-8 p-0'>
+              <span className='sr-only'>Abrir Menu</span>
+              <MoreHorizontal className='h-4 w-4' />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
+          <DropdownMenuContent align='end'>
             {/* <DropdownMenuLabel>Actions</DropdownMenuLabel> */}
             <DropdownMenuItem
               onClick={() => navigator.clipboard.writeText(payment.id)}
